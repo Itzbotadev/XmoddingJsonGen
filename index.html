@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Xmodding - Loadout JSON Generator</title>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+  <link rel="icon" href="a_d7282fbd1ed22c13199e78a1a515f107.gif" type="image/x-icon">
   <style>
     :root {
       --primary-color: #0f111a;
@@ -23,7 +24,7 @@
       margin: 0;
       padding: 0;
       font-family: 'JetBrains Mono', monospace;
-      background-color: var(--primary-color);
+      background-color: #2a2d3d;
       color: var(--text-light);
     }
 
@@ -41,13 +42,30 @@
     }
 
     .container {
-      max-width: 700px;
+      max-width: 1000px;
       margin: 40px auto;
       background-color: var(--card-dark);
       padding: 30px;
-      border-radius: 10px;
+      border-radius: 20px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.4);
     }
+    .glow-on-hover {
+  padding: 10px 20px;
+  border: 2px solid #3498db;
+  border-radius: 5px;
+  background-color: #3498db;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  outline: none;
+}
+
+.glow-on-hover:hover {
+  box-shadow: 0 0 15px #3498db, 0 0 25px #3498db, 0 0 35px #3498db;
+  transform: scale(1.1);
+}
 
     .form-group {
       margin-bottom: 20px;
@@ -260,6 +278,53 @@ slider-container {
   margin: 0 auto;
 }
 
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.checkbox-container input {
+  display: none; /* Hide the default checkbox */
+}
+
+.checkbox-container .checkmark {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #3498db;
+  border-radius: 5px;
+  margin-right: 10px;
+  position: relative;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.checkbox-container input:checked + .checkmark {
+  background-color: #3498db;
+  border-color: #3498db;
+}
+
+.checkbox-container .checkmark:before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.checkbox-container input:checked + .checkmark:before {
+  opacity: 1;
+}
+
+.checkbox-container input:focus + .checkmark {
+  box-shadow: 0 0 px rgba(52, 152, 219, 0.8);
+}
+
 slider-value-display input[type="number"] {
   width: 60px;
   padding: 4px;
@@ -277,18 +342,6 @@ slider-value-display input[type="number"] {
   <header>
     <h1>Xmodding - Loadout JSON Generator</h1>
   </header>
-  <div class="header-container">
-    <div class="mode-toggle-container">
-      <label class="theme-switch" for="themeToggle">
-        <input type="checkbox" id="themeToggle" checked>
-        <span class="slider">
-          <span class="slider-icons">
-            <span>☀️</span>
-            <span>🌙</span>
-          </span>
-        </span>
-      </label>
-    </div>
 
   <div class="container">
     <div class="form-group">
@@ -333,15 +386,17 @@ slider-value-display input[type="number"] {
     </div>
     <div class="form-group">
       <label for="count">How many child items?</label>
-      <input type="number" id="count" value="5" min="1" max="100" />
+      <select type="number" id="count" value="5" min="1" max="500"></select>
+  </select>
     </div>
-    <div class="form-group checkbox-group">
+    <div class="checkbox-container">
       <input type="checkbox" id="randomColor" />
+      <span class="checkmark"></span>
       <label for="randomColor">Randomize Colors</label>
     </div>
 
-    <button onclick="generateLoadout()">Generate JSON</button>
-    <button onclick="downloadJSON()" style="margin-left: 10px;">Download JSON</button>
+    <button class="glow-on-hover" onclick="generateLoadout()">Generate JSON</button>
+    <button class="glow-on-hover" onclick="downloadJSON()" style="margin-left: 10px;">Download JSON</button>
 
     <div class="form-group" style="margin-top: 30px;">
       <label for="jsonOutput">Generated Loadout JSON</label>
@@ -399,6 +454,16 @@ slider-value-display input[type="number"] {
         alert('Could not download JSON. Try generating it first.');
       }
     }
+        // Get the dropdown element
+        const select = document.getElementById('count');
+
+// Populate the dropdown with numbers 1 to 500
+for (let i = 1; i <= 500; i++) {
+  const option = document.createElement('option');
+  option.value = i;
+  option.textContent = i;
+  select.appendChild(option);
+}
   </script>
 </body>
 </html>
