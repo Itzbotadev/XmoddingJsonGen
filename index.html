@@ -7,26 +7,42 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
   <link rel="icon" href="a_d7282fbd1ed22c13199e78a1a515f107.gif" type="image/x-icon">
   <style>
-    :root {
-      --primary-color: #0f111a;
-      --bg-light: #f8f9fa;
-      --card-dark: #1c1f2e;
-      --text-light: #e5e7eb;
-      --accent: #a855f7;
-      --input-bg: #2a2d3d;
-    }
+:root {
+    --bg-color: #f0f2f5;
+    --text-color: #2d3748;
+    --primary-color: #6c5ce7;
+    --primary-hover: #5b4bc9;
+    --card-bg: #ffffff;
+    --border-color: #e2e8f0;
+    --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --accent-color: #9c88ff;
+    --success-color: #00b894;
+    --input-bg: #ffffff;
+    --container-border: #4834d4;
+    --item-border: #00cec9;
+    --hover-bg: #f8fafc;
+    --suggestion-hover: #edf2f7;
+    --button-radius: 12px;
+    --card-radius: 20px;
+    --input-radius: 12px;
+}
 
     * {
       box-sizing: border-box;
     }
 
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'JetBrains Mono', monospace;
-      background-color: #2a2d3d;
-      color: var(--text-light);
-    }
+    padding: 30px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.7;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    background-image: radial-gradient(rgba(108, 92, 231, 0.05) 2px, transparent 0);
+    background-size: 40px 40px;
+}
 
     header {
       padding: 20px;
@@ -86,7 +102,8 @@
       padding: 10px;
       background-color: var(--input-bg);
       border: 1px solid #444;
-      color: #fff;
+      color: #3498db;
+      
       border-radius: 5px;
     }
 
@@ -215,69 +232,35 @@ input:checked + .slider:before {
   }
 }
 
-slider-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 8px;
+input:checked + .slider {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
 }
-
-.slider-input {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 8px;
-  border-radius: 5px;
-  background: var(--border-color);
-  outline: none;
+.slider {
+    background-color: #ccc;
+    border-radius: 20px;
+    position: absolute;
+    top: 0;
+    bottom: 5;
+    left: 0;
+    right: 0;
+    transition: 0.3s;
 }
-
-.slider-input::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--primary-color);
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+.header-container {
+    display: flex
+;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    
 }
-
-.slider-input::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: var(--primary-color);
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  border: none;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s, transform 0.3s, box-shadow 0.3s;
 }
-
-.slider-input::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
-  box-shadow: 0 0 8px rgba(99, 102, 241, 0.5);
-}
-
-.slider-input::-moz-range-thumb:hover {
-  transform: scale(1.2);
-  box-shadow: 0 0 8px rgba(99, 102, 241, 0.5);
-}
-
-.slider-input:focus {
-  outline: none;
-}
-
-.slider-value-display {
-  font-size: 0.9rem;
-  color: var(--accent-color);
-  text-align: center;
-  font-weight: 500;
-  background-color: var(--hover-bg);
-  padding: 4px 8px;
-  border-radius: 6px;
-  width: fit-content;
-  margin: 0 auto;
-}
-
 .checkbox-container {
   display: flex;
   align-items: center;
@@ -324,28 +307,43 @@ slider-container {
 .checkbox-container input:focus + .checkmark {
   box-shadow: 0 0 px rgba(52, 152, 219, 0.8);
 }
-
-slider-value-display input[type="number"] {
-  width: 60px;
-  padding: 4px;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  background-color: var(--input-bg);
-  color: var(--text-color);
-  text-align: center;
-  font-size: 0.9rem;
-  font-weight: 500;
+[data-theme="dark"] {
+    --bg-color: #1a202c;
+    --text-color: #e2e8f0;
+    --primary-color: #9c88ff;
+    --primary-hover: #8c7ae6;
+    --card-bg: #2d3748;
+    --border-color: #4a5568;
+    --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+    --accent-color: #a29bfe;
+    --success-color: #00b894;
+    --input-bg: #2d3748;
+    --container-border: #8c7ae6;
+    --item-border: #00cec9;
+    --hover-bg: #3a4556;
+    --suggestion-hover: #364153;
 }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Xmodding - Loadout JSON Generator</h1>
-  </header>
+  <div class="header-container">
+    <div class="mode-toggle-container">
+      <label class="theme-switch" for="themeToggle">
+        <input type="checkbox" id="themeToggle" checked="">
+        <span class="slider">
+          <span class="slider-icons">
+            <span>☀️</span>
+            <span>🌙</span>
+          </span>
+        </span>
+      </label>
+    </div>
+    <h1>X-Modding Stash Json Generator</h1>
+  </div>
 
   <div class="container">
     <div class="form-group">
-      <label for="backpackID">Backpack Item</label>
+      <label class="glow-on-hover" for="backpackID">Backpack Item</label>
       <select id="backpackID">
         <option value="item_backpack">Backpack</option>
         <option value="item_small_backpack">Small Backpack</option>
@@ -360,33 +358,12 @@ slider-value-display input[type="number"] {
       </select>
     </div>
     <div class="form-group">
-      <label for="childItemID">Child Item</label>
+      <label class="glow-on-hover" for="childItemID">Child Item</label>
       <select id="childItemID">
-        <option value="item_random">Random (All)</option>
-        <option value="item_container_random">Container (Random Container)</option>
-        <option value="item_heartchocolatebox">Heart Chocolate Box</option>
-        <option value="item_apple">Apple</option>
-        <option value="item_arrow">Arrow</option>
-        <option value="item_heart_arrow">Heart Arrow</option>
-        <option value="item_lightbulb_arrow">Lightbulb Arrow</option>
-        <option value="item_banana">Banana</option>
-        <option value="item_pumpkinjack_small">Small Pumpkin Jack</option>
-        <option value="item_pumpkinjack">Pumpkin Jack</option>
-        <option value="item_shredder">Nut Shredder</option>
-        <option value="item_flashlight_red">Red Flashlight</option>
-        <option value="item_pumpkin_pie">Pumpkin Pie</option>
-        <option value="item_cracker">Cracker</option>
-        <option value="item_snowball">SnowBall</option>
-        <option value="item_timebomb">Time Bomb</option>
-        <option value="item_turkey_leg">Turkey Leg</option>
-        <option value="item_revolver_gold">Golden Revolver</option>
-        <option value="item_cardboard_box">CardBoard Box</option>
-        <option value="item_pelican_case">Black Crate</option>
-        <option value="item_stash_grenade">Stash Gernade</option>
-      </select>
+<option value="item_apple">Apple</option><option value="item_arrow">Arrow</option><option value="item_arrow_heart">Heart Arrow</option><option value="item_arrow_lightbulb">Lightbulb Arrow</option><option value="item_backpack">Backpack</option><option value="item_backpack_black">Black Backpack</option><option value="item_backpack_green">Green Backpack</option><option value="item_backpack_large_base">Large Backpack</option><option value="item_backpack_large_basketball">Large Basketball Print Backpack</option><option value="item_backpack_large_clover">Large Clover Print Backpack</option><option value="item_backpack_pink">Pink Backpack</option><option value="item_backpack_small_base">Small Backpack</option><option value="item_backpack_white">White Backpack</option><option value="item_backpack_with_flashlight">Backpack with Flashlight</option><option value="item_balloon">Balloon</option><option value="item_balloon_heart">Heart Balloon</option><option value="item_banana">Banana</option><option value="item_baseball_bat">Baseball Bat</option><option value="item_big_cup">Big Cup</option><option value="item_boombox">Boombox</option><option value="item_box_fan">Box Fan</option><option value="item_calculator">Calculator</option><option value="item_cardboard_box">Cardboard Box</option><option value="item_cash">Cash</option><option value="item_cash_mega_pile">Cash Mega Pile</option><option value="item_cash_pile">Cash Pile</option><option value="item_clapper">Clapper</option><option value="item_cluster_grenade">Cluster Grenade</option><option value="item_cola">Cola</option><option value="item_cola_large">Large Cola</option><option value="item_company_ration">Company Ration</option><option value="item_company_ration_heal">Company Ration</option><option value="item_cracker">Cracker</option><option value="item_crate">Crate</option><option value="item_crossbow">Crossbow</option><option value="item_crossbow_heart">Heart Crossbow</option><option value="item_crowbar">Crowbar</option><option value="item_disc">DVD</option><option value="item_disposable_camera">Disposable Camera</option><option value="item_dynamite">Dynamite</option><option value="item_dynamite_cube">Cube Dynamite</option><option value="item_egg">Egg</option><option value="item_flaregun">Flaregun</option><option value="item_flashbang">Flashbang</option><option value="item_flashlight">Flashlight</option><option value="item_flashlight_mega">Mega Flashlight</option><option value="item_flashlight_red">Red Flashlight</option><option value="item_floppy3">Floppy Disc</option><option value="item_floppy5">Floppy Disc</option><option value="item_football">Football</option><option value="item_frying_pan">Frying Pan</option><option value="item_glowstick">Glowstick</option><option value="item_goldbar">Gold Bar</option><option value="item_grenade">Impact Grenade</option><option value="item_heart_chunk">Heart Chunk</option><option value="item_heart_gun">Heart Gun</option><option value="item_heartchocolatebox">Heart Chocolate Box</option><option value="item_hh_key">Haunted House Key</option><option value="item_hookshot">Hookshot</option><option value="item_hoverpad">Hoverpad</option><option value="item_impulse_grenade">Impulse Grenade</option><option value="item_jetpack">Jetpack</option><option value="item_keycard">Keycard</option><option value="item_lance">Lance</option><option value="item_large_banana">Large Banana</option><option value="item_mug">Mug</option><option value="item_nut">Nut</option><option value="item_ogre_hands">Ogre Hands</option><option value="item_ore_copper_l">Large Copper Chunk</option><option value="item_ore_copper_m">Copper Chunk</option><option value="item_ore_copper_s">Small Copper Chunk</option><option value="item_ore_gold_l">Large Gold Chunk</option><option value="item_ore_gold_m">Gold Chunk</option><option value="item_ore_gold_s">Small Gold Chunk</option><option value="item_ore_hell">Cinder</option><option value="item_ore_silver_l">Large Silver Chunk</option><option value="item_ore_silver_m">Small Silver Chunk</option><option value="item_ore_silver_s">Silver Chunk</option><option value="item_painting_canvas">Painting Canvas</option><option value="item_paperpack">Paper</option><option value="item_pelican_case">Black Crate</option><option value="item_pickaxe">Pickaxe</option><option value="item_pickaxe_cny">Golded Pickaxe</option><option value="item_pickaxe_cube">Cube Pickaxe</option><option value="item_pipe">Pipe</option><option value="item_plunger">Plunger</option><option value="item_pogostick">Pogostick</option><option value="item_police_baton">Police Baton (Crowbar)</option><option value="item_pumpkin_pie">Pumpkin Pie</option><option value="item_pumpkinjack">Pumpkin Jack</option><option value="item_pumpkinjack_small">Small Pumpkin Jack</option><option value="item_quiver">Quiver</option><option value="item_quiver_heart">Heart Quiver</option><option value="item_radioactive_broccoli">Mega Broccoli</option><option value="item_randombox_mobloot_big">Big Mob Loot Box</option><option value="item_randombox_mobloot_medium">Mob Loot Box</option><option value="item_randombox_mobloot_small">Small Mob Loot Box</option><option value="item_randombox_mobloot_weapons">Mob Weapons Loot Box</option><option value="item_revolver">Revolver</option><option value="item_revolver_ammo">Revolver Ammo</option><option value="item_rope">Rope</option><option value="item_rpg">RPG</option><option value="item_rpg_ammo">RPG Rocket</option><option value="item_rpg_cny">Rocket Dragon RPG</option><option value="item_rubberducky">Rubber Ducky</option><option value="item_ruby">Ruby</option><option value="item_saddle">Saddle</option><option value="item_scanner">Scanner</option><option value="item_scissors">Scissors</option><option value="item_shield">Shield</option><option value="item_shield_bones">Protective Bone Shield</option><option value="item_shield_police">Police Shield</option><option value="item_shotgun">Shotgun</option><option value="item_shotgun_ammo">Shotgun Ammo</option><option value="item_shredder">Nut Shredder</option><option value="item_shrinking_broccoli">Micro Broccoli</option><option value="item_snowball">Snowball</option><option value="item_stapler">Stapler</option><option value="item_stick_armbones">Arm Bones (Stick)</option><option value="item_stick_bone">Bone (Stick)</option><option value="item_sticker_dispenser">Sticker Dispenser</option><option value="item_sticky_dynamite">Sticky Dynamite</option><option value="item_stinky_cheese">Stinky Cheese</option><option value="item_tablet">Tablet</option><option value="item_tapedispenser">Tape Dispenser</option><option value="item_tele_grenade">Tele Grenade</option><option value="item_theremin">Theremin</option><option value="item_timebomb">Time Bomb</option><option value="item_toilet_paper">Toilet Paper</option><option value="item_toilet_paper_mega">Mega Toilet Paper</option><option value="item_toilet_paper_roll_empty">Empty Toilet Paper Roll</option><option value="item_treestick">Tree Stick</option><option value="item_tripwire_explosive">Tripwire Explosive</option><option value="item_trophy">Trophy</option><option value="item_turkey_leg">Turkey Leg</option><option value="item_turkey_whole">Turkey Whole</option><option value="item_umbrella">Umbrella</option><option value="item_umbrella_clover">Clover Umbrella</option><option value="item_unidentified">Unknown Item</option><option value="item_upsidedown_loot">Upsidedown Loot</option><option value="item_uranium_chunk_l">Large Uranium Chunk</option><option value="item_uranium_chunk_m">Uranium Chunk</option><option value="item_uranium_chunk_s">Small Uranium Chunk</option><option value="item_whoopie">Whoopie</option><option value="item_zipline_gun">Zipline Gun</option><option value="item_revolver_gold">Golden Revolver</option></select>
     </div>
     <div class="form-group">
-      <label for="count">How many child items?</label>
+      <label class="glow-on-hover" for="count">How many child items?</label>
       <select type="number" id="count" value="5" min="1" max="500"></select>
   </select>
   <div class="checkbox-container">
@@ -470,6 +447,22 @@ for (let i = 1; i <= 500; i++) {
   option.textContent = i;
   select.appendChild(option);
 }
+const themeToggle = document.getElementById('themeToggle');
+    const htmlElement = document.documentElement;
+    
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    htmlElement.setAttribute('data-theme', savedTheme);
+    themeToggle.checked = savedTheme === 'dark';
+
+    themeToggle.addEventListener('change', function() {
+      if (this.checked) {
+        htmlElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        htmlElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+      }
+    });
   </script>
 </body>
 </html>
