@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xmodding - Loadout JSON Generator</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #0f111a;
+      --bg-light: #f8f9fa;
+      --card-dark: #1c1f2e;
+      --text-light: #e5e7eb;
+      --accent: #a855f7;
+      --input-bg: #2a2d3d;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'JetBrains Mono', monospace;
+      background-color: var(--primary-color);
+      color: var(--text-light);
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+      background-color: var(--card-dark);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: var(--accent);
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      background-color: var(--card-dark);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      background-color: var(--input-bg);
+      border: 1px solid #444;
+      color: #fff;
+      border-radius: 5px;
+    }
+
+    input[type="checkbox"] {
+      transform: scale(1.2);
+      margin-right: 8px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+    }
+
+    button {
+      background-color: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background-color: #9333ea;
+    }
+
+    textarea {
+      font-size: 13px;
+      resize: vertical;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #6b7280;
+    }
+    .theme-switch {
+  display: inline-block;
+  height: 34px;
+  position: relative;
+  width: 60px;
+}
+
+.theme-switch input {
+  display: none;
+}
+
+.slider {
+  background-color: var(--bg-light);
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: .4s;
+  border-radius: 34px;
+  display: flex;
+  align-items: center;
+}
+
+.slider:before {
+  background-color: var(--bg-light);
+  bottom: 4px;
+  content: "";
+  height: 26px;
+  left: 4px;
+  position: absolute;
+  transition: .4s;
+  width: 26px;
+  border-radius: 50%;
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input:checked + .slider {
+  background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider-icons {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+  align-items: center;
+  height: 100%;
+  color: var(--input-bg);
+  font-size: 14px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 16px;
+  }
+  
+  .header-container {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .mode-toggle-container {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .form-section, .item-section {
+    padding: 20px;
+    border-radius: 12px;
+  }
+  
+  .input-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .random-container {
+    width: 100%;
+  }
+}
+
+slider-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+}
+
+.slider-input {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 5px;
+  background: var(--border-color);
+  outline: none;
+}
+
+.slider-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.slider-input::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: none;
+}
+
+.slider-input::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.5);
+}
+
+.slider-input::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 8px rgba(99, 102, 241, 0.5);
+}
+
+.slider-input:focus {
+  outline: none;
+}
+
+.slider-value-display {
+  font-size: 0.9rem;
+  color: var(--accent-color);
+  text-align: center;
+  font-weight: 500;
+  background-color: var(--hover-bg);
+  padding: 4px 8px;
+  border-radius: 6px;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+slider-value-display input[type="number"] {
+  width: 60px;
+  padding: 4px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Xmodding - Loadout JSON Generator</h1>
+  </header>
+  <div class="header-container">
+    <div class="mode-toggle-container">
+      <label class="theme-switch" for="themeToggle">
+        <input type="checkbox" id="themeToggle" checked>
+        <span class="slider">
+          <span class="slider-icons">
+            <span>☀️</span>
+            <span>🌙</span>
+          </span>
+        </span>
+      </label>
+    </div>
+
+  <div class="container">
+    <div class="form-group">
+      <label for="backpackID">Backpack Item</label>
+      <select id="backpackID">
+        <option value="item_backpack">Backpack</option>
+        <option value="item_small_backpack">Small Backpack</option>
+        <option value="item_white_backpack">White Backpack</option>
+        <option value="item_black_backpack">Black Backpack</option>
+        <option value="item_green_backpack">Green Backpack</option>
+        <option value="item_pink_backpack">Pink Backpack</option>
+        <option value="item_large_backpack">Large Backpack</option>
+        <option value="item_large_clover_print_backpack">Large Clover Print Backpack</option>
+        <option value="item_large_basketball_print_backpack">Large Basketball Print Backpack</option>
+        <option value="item_backpack_flashlight">Backpack with Flashlight</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="childItemID">Child Item</label>
+      <select id="childItemID">
+        <option value="item_random">Random (All)</option>
+        <option value="item_container_random">Container (Random Container)</option>
+        <option value="item_heartchocolatebox">Heart Chocolate Box</option>
+        <option value="item_apple">Apple</option>
+        <option value="item_arrow">Arrow</option>
+        <option value="item_heart_arrow">Heart Arrow</option>
+        <option value="item_lightbulb_arrow">Lightbulb Arrow</option>
+        <option value="item_banana">Banana</option>
+        <option value="item_pumpkinjack_small">Small Pumpkin Jack</option>
+        <option value="item_pumpkinjack">Pumpkin Jack</option>
+        <option value="item_shredder">Nut Shredder</option>
+        <option value="item_flashlight_red">Red Flashlight</option>
+        <option value="item_pumpkin_pie">Pumpkin Pie</option>
+        <option value="item_cracker">Cracker</option>
+        <option value="item_snowball">SnowBall</option>
+        <option value="item_timebomb">Time Bomb</option>
+        <option value="item_turkey_leg">Turkey Leg</option>
+        <option value="item_revolver_gold">Golden Revolver</option>
+        <option value="item_cardboard_box">CardBoard Box</option>
+        <option value="item_pelican_case">Black Crate</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="count">How many child items?</label>
+      <input type="number" id="count" value="5" min="1" max="100" />
+    </div>
+    <div class="form-group checkbox-group">
+      <input type="checkbox" id="randomColor" />
+      <label for="randomColor">Randomize Colors</label>
+    </div>
+
+    <button onclick="generateLoadout()">Generate JSON</button>
+    <button onclick="downloadJSON()" style="margin-left: 10px;">Download JSON</button>
+
+    <div class="form-group" style="margin-top: 30px;">
+      <label for="jsonOutput">Generated Loadout JSON</label>
+      <textarea id="jsonOutput" rows="12" readonly></textarea>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Xmodding - Created By Null!
+  </footer>
+
+  <script>
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function generateLoadout() {
+      const backpackID = document.getElementById('backpackID').value;
+      const childItemID = document.getElementById('childItemID').value;
+      const count = parseInt(document.getElementById('count').value);
+      const randomColor = document.getElementById('randomColor').checked;
+
+      const children = [];
+      for (let i = 0; i < count; i++) {
+        children.push({
+          itemID: childItemID,
+          colorHue: randomColor ? getRandomInt(0, 360) : 0,
+          colorSaturation: randomColor ? getRandomInt(50, 100) : 100,
+          scaleModifier: 0,
+          state: 8000
+        });
+      }
+
+      const loadout = {
+        leftHand: {
+          itemID: backpackID,
+          children
+        }
+      };
+
+      document.getElementById('jsonOutput').value = JSON.stringify(loadout, null, 2);
+    }
+
+    function downloadJSON() {
+      const text = document.getElementById('jsonOutput').value;
+      try {
+        const blob = new Blob([text], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'ac_loadout.json';
+        a.click();
+        URL.revokeObjectURL(url);
+      } catch (err) {
+        alert('Could not download JSON. Try generating it first.');
+      }
+    }
+  </script>
+</body>
+</html>
